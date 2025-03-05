@@ -15,14 +15,18 @@ h1,
 h2 {
   text-align: center;
 }
-#menu {
-  height: 60vh;
+#menu,
+.message {
+  height: fit-content;
   width: 60%;
   padding: 50px;
   margin: auto;
-
+  display: block;
   background-color: rgb(23, 82, 109);
   border-radius: 20px;
+}
+.message {
+  display: none;
 }
 .menuBtn {
   display: flex;
@@ -77,6 +81,9 @@ button {
 
   animation: slideBackground 100s linear infinite;
   /* Apply animation */
+}
+#game {
+  display: none;
 }
 .score,
 .high {
@@ -173,5 +180,14 @@ a {
   100% {
     left: 470px;
     opacity: 0%;
+  }
+}
+@media only screen and (max-width: 800px) {
+  #menu,
+  #game {
+    display: none;
+  }
+  .message {
+    display: block;
   }
 }
