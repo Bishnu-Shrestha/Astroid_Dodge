@@ -73,7 +73,7 @@ button {
   margin-left: 480px;
   margin-top: 99px;
   /* margin-right: 349px; */
-  background-image: url(../images/space.jpg);
+  background-image: url(./images/space.jpg);
 
   animation: slideBackground 100s linear infinite;
   /* Apply animation */

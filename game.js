@@ -201,7 +201,7 @@ function resetGame() {
   });
   hiScoreCalc(score.textContent);
   score.textContent = "0";
-  ship.innerHTML = "<img src='../images/spaceship.png' width='100px'/>";
+  ship.innerHTML = "<img src='./images/spaceship.png' width='100px'/>";
   ship.style.top = "49%";
   ship.style.left = "49%";
 }
