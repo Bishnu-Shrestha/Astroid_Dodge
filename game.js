@@ -75,7 +75,7 @@ function createAsteroid() {
 
   // Create an img element inside the asteroid div
   const asteroidImg = document.createElement("img");
-  asteroidImg.src = "../images/asteroid.png"; // Set the source of the image
+  asteroidImg.src = "./images/asteroid.png"; // Set the source of the image
   asteroidImg.width = 50; // Set the width of the image
   asteroidImg.height = 50; // Set the height of the image
 
@@ -100,7 +100,7 @@ function createCoins() {
 
   // Create an img element inside the coin div
   const coinImg = document.createElement("img");
-  coinImg.src = "../images/coin.png"; // Set the source of the image
+  coinImg.src = "./images/coin.png"; // Set the source of the image
   coinImg.width = 20; // Set the width of the image
   coinImg.height = 20; // Set the height of the image
 
@@ -228,7 +228,7 @@ document.querySelectorAll(".exit").forEach((button) => {
 });
 
 document.addEventListener("keyup", (event) => {
-  ship.innerHTML = "<img src='../images/spaceship.png' width='100px' />";
+  ship.innerHTML = "<img src='./images/spaceship.png' width='100px' />";
 });
 
 // Controlling the spaceship using the W, A, S, D keys
@@ -253,13 +253,13 @@ function characterControl(event) {
       case "arrowleft":
       case "a":
         ship.innerHTML =
-          "<img src='../images/spaceship_rev.png' width='100px' />";
+          "<img src='./images/spaceship_rev.png' width='100px' />";
         x -= moveAmount;
         break;
       case "arrowright":
       case "d":
         ship.innerHTML =
-          "<img src='../images/spaceship_fwd.png' width='100px' />";
+          "<img src='./images/spaceship_fwd.png' width='100px' />";
         x += moveAmount;
         break;
     }
