@@ -3,20 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>💥Asteroid dodge💥</title>
+    <title>Asteroid dodge💥</title>
     <link rel="stylesheet" href="gameStyles.css" />
     <link rel="icon" href="./images/coin.png" />
   </head>
 
   <body>
-    <h1>💥💥 Asteroid dodge 🚀💥💥</h1>
-    <div class="message">
-      😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm
-      working on the mobile and tablet versions though,😅😅 for now if you can
-      try and visit here through your PC.
+    <h1>💥💥 Dodge the asteroids 🚀💥💥</h1>
+    <div id="msgOverlay">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+        >&times;</a
+      >
       <br />
-      This is just a simple old schoole gaem where you can controll a spaceship
-      to evade astroids and collect coins.
     </div>
     <div id="menu">
       <h2>
@@ -34,8 +32,10 @@
       </h2>
 
       <div class="menuBtn">
-        <button id="startGame">Start Game</button>
-        <button id="instructions">How to Play</button>
+        <button id="startGame" title="start the game">Let's Play</button>
+        <button id="instructions" title="instructions for the new player">
+          How to Play
+        </button>
         <button class="exit">Exit</button>
       </div>
     </div>
@@ -44,7 +44,7 @@
         SCORE: <br />
         <div id="scoreVal">0</div>
       </div>
-      <div class="high">
+      <div class="highScore">
         Hi Score: <br />
         <div id="hiScorVal">0</div>
       </div>
@@ -53,14 +53,21 @@
           <img src="./images/spaceship.png" width="100px" />
         </div>
       </div>
-      <div id="controls">
+      <div id="options">
         <!-- <button id="asteroid">asteroid</button> -->
-        <button id="play" onclick="play()">play</button>
-        <button id="pause">pause</button>
-        <button id="reset" onclick="resetGame()">reset</button>
-        <button class="exit">Exit</button>
+        <button id="play" onclick="play()" title="press Enter">play</button>
+        <button id="pause" title="press Space bar">pause</button>
+        <button
+          id="reset"
+          onclick="resetGame()"
+          title="reset to begining in paused state"
+        >
+          reset
+        </button>
+        <button class="exit" title="exit game">Exit</button>
       </div>
     </div>
+
     <footer>
       Created by
       <a href="mailto:bishnu011shrestha@gmail.com" title="E-maile me">

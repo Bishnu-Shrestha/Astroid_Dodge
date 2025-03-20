@@ -1,18 +1,51 @@
-const minX = 480; // left side
-const maxX = 1355; // right side
-const minY = 160; // top side
-const maxY = 730; // bottom side
-
 let gameInterval;
 let asteroidInterval;
 let coinInterval;
 let isPlaying = false;
+const menu = document.getElementById("menu");
+const game = document.getElementById("game");
 const score = document.getElementById("scoreVal");
 const ship = document.getElementById("ship");
+const area = document.querySelector(".area");
 const enemy = document.getElementById("enemy");
+const msgOverlay = document.getElementById("msgOverlay");
+
+const message = document.createElement("div");
+message.className = "message";
 const moveAmount = 10;
 
+// Function to check screen size and display a message
+function checkScreenSize() {
+  const minWidth = 800; // Minimum width for the game to be playable
+  const minHeight = 600; // Minimum height for the game to be playable
+
+  if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
+    const msgText =
+      "  😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm working on the mobile and tablet versions though,😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old schoole gaem where you can controll a spaceship to evade astroids and collect coins.";
+    MsgCreate(msgText, "50%");
+  } else {
+    msgOverlay.style.display = "none";
+  }
+}
+
+// Call the function to check screen size on page load
+document.addEventListener("DOMContentLoaded", checkScreenSize);
+
+// Optionally, check screen size on window resize
+window.addEventListener("resize", checkScreenSize);
+
+function MsgCreate(msgCnt, sizeVal) {
+  message.style.width = `${sizeVal}`;
+  message.innerHTML = `${msgCnt}`;
+  msgOverlay.appendChild(message);
+  msgOverlay.style.display = "block";
+}
+
+function closeNav() {
+  document.getElementById("msgOverlay").style.display = "none";
+}
 function startGame() {
+  msgOverlay.style.display = "none";
   isPlaying = true;
   gameLoop();
   asteroidInterval = setInterval(createAsteroid, 2000); // Generate an asteroid every 2 seconds
@@ -33,23 +66,25 @@ function gameLoop() {
 
 // Event listener to start the game
 document.getElementById("startGame").addEventListener("click", () => {
-  document.getElementById("menu").style.display = "none";
-  document.getElementById("game").style.display = "block";
+  menu.style.display = "none";
+  game.style.display = "block";
   startGame();
 });
-
+//adding key bindings for easier keyboard navigations
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     document.getElementById("play").click();
   }
+  if (event.code === "Space") {
+    document.getElementById("pause").click();
+  }
 });
-
-document.getElementById("play").addEventListener("click", () => {
+function play() {
   if (!isPlaying) {
     startGame();
   }
-});
-
+}
+//how to play button.
 document.getElementById("pause").addEventListener("click", () => {
   if (isPlaying) {
     isPlaying = false;
@@ -57,6 +92,12 @@ document.getElementById("pause").addEventListener("click", () => {
     clearInterval(coinInterval);
     document.removeEventListener("keydown", characterControl);
     document.querySelector(".area").classList.add("paused");
+    const msgPaused = `Are you Enjoying the Game so far? <br>Let me know. <br>GAME PAUSED <br> High Score:${Number(
+      document.getElementById("hiScorVal").textContent
+    )} <br>Current Score: ${Number(score.textContent)}.<br>
+    <button onclick="closeNav(play()) ">Unpause and exit</button>`;
+    const sizW = "25%";
+    MsgCreate(msgPaused, sizW);
     document.querySelectorAll(".asteroids, .coins").forEach((element) => {
       element.classList.add("paused");
     });
@@ -65,13 +106,14 @@ document.getElementById("pause").addEventListener("click", () => {
 
 //spawn asteroids
 function createAsteroid() {
+  const areaHeight = area.clientHeight;
+  const areaWidth = area.clientWidth;
+
   // Create a new asteroid div
   const asteroid = document.createElement("div");
   asteroid.className = "asteroids";
-  asteroid.style.top = `${
-    Math.floor(Math.random() * (maxY - minY - 30)) + minY
-  }px`;
-  asteroid.style.left = `${maxX}px`;
+  asteroid.style.top = `${Math.floor(Math.random() * (areaHeight - 60))}px`; // Random vertical position within the area
+  asteroid.style.left = `${areaWidth}px`; // Position at the right border
 
   // Create an img element inside the asteroid div
   const asteroidImg = document.createElement("img");
@@ -83,7 +125,7 @@ function createAsteroid() {
   asteroid.appendChild(asteroidImg);
 
   // Append the asteroid div to the game area
-  document.querySelector(".area").appendChild(asteroid);
+  area.appendChild(asteroid);
 
   // Remove the asteroid after the animation ends
   asteroid.addEventListener("animationend", () => {
@@ -92,11 +134,14 @@ function createAsteroid() {
 }
 
 function createCoins() {
+  const areaHeight = area.clientHeight;
+  const areaWidth = area.clientWidth;
+
   // Create a new coin div
   const coin = document.createElement("div");
   coin.className = "coins";
-  coin.style.top = `${Math.floor(Math.random() * (maxY - minY - 10)) + minY}px`;
-  coin.style.left = `${maxX}px`;
+  coin.style.top = `${Math.floor(Math.random() * (areaHeight - 70))}px`; // Random vertical position within the area
+  coin.style.left = `${areaWidth}px`; // Position at the right border
 
   // Create an img element inside the coin div
   const coinImg = document.createElement("img");
@@ -108,7 +153,7 @@ function createCoins() {
   coin.appendChild(coinImg);
 
   // Append the coin div to the game area
-  document.querySelector(".area").appendChild(coin);
+  area.appendChild(coin);
 
   // Remove the coin after the animation ends
   coin.addEventListener("animationend", () => {
@@ -116,14 +161,6 @@ function createCoins() {
   });
 }
 
-document.getElementById("reset").addEventListener("click", () => {
-  document.querySelectorAll(".asteroids, .coins").forEach((element) => {
-    element.remove();
-  });
-  ship.style.top = "49%";
-  ship.style.left = "49%";
-  score.innerHTML = `0`;
-});
 function checkCollisions(shipRect) {
   const collisionMarginS = 10; // Adjust this value to reduce the collision box size
 
@@ -135,7 +172,8 @@ function checkCollisions(shipRect) {
     width: shipRect.width - 2 * collisionMarginS,
     height: shipRect.height - 2 * collisionMarginS,
   };
-  //colision checking for asteroid
+
+  // Collision checking for asteroids
   document.querySelectorAll(".asteroids").forEach((asteroid) => {
     const asteroidRect = asteroid.getBoundingClientRect();
     const collisionMarginA = 5;
@@ -157,13 +195,19 @@ function checkCollisions(shipRect) {
       reducedShipRect.top + reducedShipRect.height > reducedAsteroidRect.top
     ) {
       // Collision detected
-      alert(
-        "Collision detected!\n------------------------------------------------\n !!!!!!!!!!!!!!!! GAME OVER !!!!!!!!!!!!!!!!\n------------------------------------------------"
-      );
+      document.querySelectorAll(".asteroids, .coins").forEach((element) => {
+        element.classList.add("paused");
+      });
+      const msgOver = `Tell me about the problems you are facing and potential solution if you have one.<br>GAME OVER <br> Your score: ${Number(
+        score.textContent
+      )}.`;
+      const sizW = "25%";
+      MsgCreate(msgOver, sizW);
       resetGame();
     }
   });
-  //coins for gaining points
+
+  // Collision checking for coins
   document.querySelectorAll(".coins").forEach((coin) => {
     const coinRect = coin.getBoundingClientRect();
 
@@ -182,16 +226,72 @@ function checkCollisions(shipRect) {
     }
   });
 }
-//keeping kigh score in check
+
+// Keeping high score in check
+// Initialize high score display
+document.addEventListener("DOMContentLoaded", () => {
+  const hiScore = localStorage.getItem("hiScore") || 0;
+  document.getElementById("hiScorVal").textContent = hiScore;
+});
 function hiScoreCalc(scoreVal) {
-  let HiScore = 0;
-  if (scoreVal > HiScore) {
-    const hiScore = document.getElementById("hiScorVal");
-    hiScore.textContent = scoreVal;
+  let hiScore = localStorage.getItem("hiScore") || 0;
+  if (scoreVal > hiScore) {
+    localStorage.setItem("hiScore", scoreVal);
+    hiScore = scoreVal;
+  }
+  document.getElementById("hiScorVal").textContent = hiScore;
+}
+
+document.addEventListener("keyup", (event) => {
+  ship.innerHTML = "<img src='./images/spaceship.png' width='100px' />";
+});
+
+// Controlling the spaceship using the W, A, S, D keys
+function characterControl(event) {
+  const areaRect = area.getBoundingClientRect();
+  const shipRect = ship.getBoundingClientRect();
+
+  let y = ship.offsetTop;
+  let x = ship.offsetLeft;
+
+  const speed = moveAmount; // Movement speed
+
+  // Movement key mapping
+  const movementKeys = {
+    w: { axis: "y", value: -speed },
+    s: { axis: "y", value: speed },
+    a: { axis: "x", value: -speed, img: "./images/spaceship_rev.png" },
+    d: { axis: "x", value: speed, img: "./images/spaceship_fwd.png" },
+    arrowup: { axis: "y", value: -speed },
+    arrowdown: { axis: "y", value: speed },
+    arrowleft: { axis: "x", value: -speed, img: "./images/spaceship_rev.png" },
+    arrowright: { axis: "x", value: speed, img: "./images/spaceship_fwd.png" },
+  };
+
+  let key = event.key.toLowerCase();
+  if (movementKeys[key]) {
+    let move = movementKeys[key];
+
+    if (move.axis === "y") {
+      y += move.value;
+    } else {
+      x += move.value;
+      if (move.img) {
+        ship.innerHTML = `<img src="${move.img}" width="100px" />`;
+      }
+    }
+
+    // **Ensure the ship stays within the game area**
+    y = Math.max(0, Math.min(y, areaRect.height - shipRect.height));
+    x = Math.max(0, Math.min(x, areaRect.width - shipRect.width));
+
+    ship.style.top = `${y}px`;
+    ship.style.left = `${x}px`;
   }
 }
-//add reset functionality
+// Add reset functionality
 function resetGame() {
+  // msgOverlay.style.display = "none";
   isPlaying = false;
   clearInterval(asteroidInterval);
   clearInterval(coinInterval);
@@ -199,11 +299,11 @@ function resetGame() {
   document.querySelectorAll(".asteroids, .coins").forEach((element) => {
     element.remove();
   });
-  hiScoreCalc(score.textContent);
+  hiScoreCalc(Number(score.textContent));
   score.textContent = "0";
   ship.innerHTML = "<img src='./images/spaceship.png' width='100px'/>";
-  ship.style.top = "49%";
-  ship.style.left = "49%";
+  ship.style.top = "50%";
+  ship.style.left = "50%";
 }
 
 document.getElementById("instructions").addEventListener("click", () => {
@@ -214,8 +314,8 @@ document.getElementById("instructions").addEventListener("click", () => {
 
 document.querySelectorAll(".exit").forEach((button) => {
   button.addEventListener("click", () => {
-    document.getElementById("game").style.display = "none";
-    document.getElementById("menu").style.display = "block";
+    game.style.display = "none";
+    menu.style.display = "block";
     isPlaying = false;
     clearInterval(asteroidInterval);
     clearInterval(coinInterval);
@@ -223,61 +323,7 @@ document.querySelectorAll(".exit").forEach((button) => {
     document.querySelector(".area").classList.add("paused");
     document.querySelectorAll(".asteroids, .coins").forEach((element) => {
       element.classList.add("paused");
+      element.remove();
     });
   });
 });
-
-document.addEventListener("keyup", (event) => {
-  ship.innerHTML = "<img src='./images/spaceship.png' width='100px' />";
-});
-
-// Controlling the spaceship using the W, A, S, D keys
-function characterControl(event) {
-  const rect = ship.getBoundingClientRect();
-  let y = rect.top + window.scrollY;
-  let x = rect.left + window.scrollX;
-
-  if (
-    event.key.startsWith("Arrow") ||
-    ["w", "a", "s", "d"].includes(event.key.toLowerCase())
-  ) {
-    switch (event.key.toLowerCase()) {
-      case "arrowup":
-      case "w":
-        y -= moveAmount;
-        break;
-      case "arrowdown":
-      case "s":
-        y += moveAmount;
-        break;
-      case "arrowleft":
-      case "a":
-        ship.innerHTML =
-          "<img src='./images/spaceship_rev.png' width='100px' />";
-        x -= moveAmount;
-        break;
-      case "arrowright":
-      case "d":
-        ship.innerHTML =
-          "<img src='./images/spaceship_fwd.png' width='100px' />";
-        x += moveAmount;
-        break;
-    }
-
-    // Ensure the ship stays within the boundaries
-    if (y < minY) {
-      y = minY;
-    } else if (y + ship.offsetHeight > maxY) {
-      y = maxY - ship.offsetHeight;
-    }
-
-    if (x < minX) {
-      x = minX;
-    } else if (x + ship.offsetWidth > maxX) {
-      x = maxX - ship.offsetWidth;
-    }
-
-    ship.style.top = `${y}px`;
-    ship.style.left = `${x}px`;
-  }
-}
