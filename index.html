@@ -11,7 +11,7 @@
   <body>
     <h1>💥💥 Dodge the asteroids 🚀💥💥</h1>
     <div id="msgOverlay">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+      <a href="javascript:void(0)" id="closebtn" onclick="closeNav()"
         >&times;</a
       >
       <br />
@@ -36,7 +36,6 @@
         <button id="instructions" title="instructions for the new player">
           How to Play
         </button>
-        <button class="exit">Exit</button>
       </div>
     </div>
     <div id="game">
@@ -45,7 +44,7 @@
         <div id="scoreVal">0</div>
       </div>
       <div class="highScore">
-        Hi Score: <br />
+        Hi SCORE: <br />
         <div id="hiScorVal">0</div>
       </div>
       <div class="area">
@@ -64,7 +63,7 @@
         >
           reset
         </button>
-        <button class="exit" title="exit game">Exit</button>
+        <button id="exit" onclick="exit()" title="exit game">Exit</button>
       </div>
     </div>
 

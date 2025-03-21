@@ -21,7 +21,7 @@ function checkScreenSize() {
 
   if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
     const msgText =
-      "  😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm working on the mobile and tablet versions though,😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old schoole gaem where you can controll a spaceship to evade astroids and collect coins.";
+      "😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm working on the mobile and tablet versions though,😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old schoole gaem where you can controll a spaceship to evade astroids and collect coins.";
     MsgCreate(msgText, "50%");
   } else {
     msgOverlay.style.display = "none";
@@ -78,6 +78,9 @@ document.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
     document.getElementById("pause").click();
   }
+  if (event.key === "Escape") {
+    document.getElementById("closebtn").click();
+  }
 });
 function play() {
   if (!isPlaying) {
@@ -92,7 +95,7 @@ document.getElementById("pause").addEventListener("click", () => {
     clearInterval(coinInterval);
     document.removeEventListener("keydown", characterControl);
     document.querySelector(".area").classList.add("paused");
-    const msgPaused = `Are you Enjoying the Game so far? <br>Let me know. <br>GAME PAUSED <br> High Score:${Number(
+    const msgPaused = `Enjoying the Game so far? <br>Let me know! <br><br>GAME PAUSED <br> High Score:${Number(
       document.getElementById("hiScorVal").textContent
     )} <br>Current Score: ${Number(score.textContent)}.<br>
     <button onclick="closeNav(play()) ">Unpause and exit</button>`;
@@ -198,7 +201,7 @@ function checkCollisions(shipRect) {
       document.querySelectorAll(".asteroids, .coins").forEach((element) => {
         element.classList.add("paused");
       });
-      const msgOver = `Tell me about the problems you are facing and potential solution if you have one.<br>GAME OVER <br> Your score: ${Number(
+      const msgOver = `Let me know if you are facing any problems and further features if you want one.<br><br>!!!!GAME OVER!!!! <br><br> Your score: ${Number(
         score.textContent
       )}.`;
       const sizW = "25%";
@@ -312,18 +315,16 @@ document.getElementById("instructions").addEventListener("click", () => {
   );
 });
 
-document.querySelectorAll(".exit").forEach((button) => {
-  button.addEventListener("click", () => {
-    game.style.display = "none";
-    menu.style.display = "block";
-    isPlaying = false;
-    clearInterval(asteroidInterval);
-    clearInterval(coinInterval);
-    document.removeEventListener("keydown", characterControl);
-    document.querySelector(".area").classList.add("paused");
-    document.querySelectorAll(".asteroids, .coins").forEach((element) => {
-      element.classList.add("paused");
-      element.remove();
-    });
+function exit() {
+  game.style.display = "none";
+  menu.style.display = "block";
+  isPlaying = false;
+  clearInterval(asteroidInterval);
+  clearInterval(coinInterval);
+  document.removeEventListener("keydown", characterControl);
+  document.querySelector(".area").classList.add("paused");
+  document.querySelectorAll(".asteroids, .coins").forEach((element) => {
+    element.classList.add("paused");
+    element.remove();
   });
-});
+}

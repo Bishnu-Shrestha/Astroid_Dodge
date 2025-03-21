@@ -1,6 +1,6 @@
 :root {
-  --area-width: 875px;
-  --area-height: 575px;
+  --area-width: 55vw;
+  --area-height: 60vh;
 }
 body {
   -webkit-user-select: none; /* Safari */
@@ -29,7 +29,7 @@ h2 {
   background-color: rgb(23, 82, 109);
   border-radius: 20px;
 }
-.closebtn {
+#closebtn {
   position: absolute;
   bottom: 15vh;
   right: 50vw;
@@ -96,13 +96,12 @@ button {
   height: var(--area-height);
   width: var(--area-width);
   background-color: black;
-
   margin: auto;
   margin-top: 60px;
   background-image: url(./images/space.jpg);
-
-  animation: slideBackground 100s linear infinite;
-  /* Apply animation */
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  animation: slideBackground 20s linear infinite;
 }
 #game {
   display: none;
@@ -111,12 +110,13 @@ button {
 .highScore {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 3em;
-  float: left;
-  /* position: inherit; */
-  margin: 50px;
   padding: 20px;
   border: 3px solid white;
   border-radius: 20px;
+}
+.score {
+  float: left;
+  margin-left: 30px;
 }
 .highScore {
   float: right;
@@ -124,14 +124,11 @@ button {
 }
 @keyframes slideBackground {
   0% {
-    background-position: -1 0;
-  } /* Start position */
-  50% {
-    background-position: 99% 0;
+    background-position: 0% 0;
   }
-  99% {
-    background-position: -1% 0;
-  } /* End position */
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .paused {
