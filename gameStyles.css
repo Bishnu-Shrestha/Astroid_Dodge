@@ -9,7 +9,7 @@ body {
   user-select: none; /* Standard syntax */
 
   margin: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
   caret-color: transparent;
   transform-origin: center;
   background: fixed;
@@ -33,14 +33,16 @@ h2 {
   background-color: rgb(23, 82, 109);
   border-radius: 20px;
 }
-#closebtn {
+#closeBtn {
   position: absolute;
-  bottom: 15vh;
-  right: 50vw;
-  color: rgb(205, 232, 255);
-  font-size: 60px;
+  top: -12%;
+  right: -4%;
+  color: rgb(255, 255, 255);
+  font-size: 100px;
 }
+
 .message {
+  position: relative;
   width: 50%;
   font-size: 1.6em;
   height: fit-content;
@@ -53,6 +55,7 @@ h2 {
   background-color: rgb(23, 82, 109);
   border-radius: 20px;
 }
+
 #msgOverlay {
   position: absolute;
   /* height: 100%; */
@@ -173,8 +176,8 @@ button {
   animation: slider 5s linear 1;
 }
 footer {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -213,8 +216,17 @@ a {
   #game {
     display: none;
   }
-  .msgOverlay {
-    display: block;
-    z-index: 10;
+  .score,
+  .highScore {
+    transform-origin: top left;
+    transform: rotate(90deg);
+    white-space: nowrap;
+    margin-left: 200px;
+  }
+  .score {
+    float: left;
+  }
+  .highScore {
+    float: right;
   }
 } */

@@ -20,7 +20,7 @@ function checkScreenSize() {
 
   if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
     const msgText =
-      "😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm working on the mobile and tablet versions though, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
+      "If you are on mobile 😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's with keyboard. I'm working on the mobile and tablet versions though, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
     MsgCreate(msgText, "50%");
   } else {
     msgOverlay.style.display = "none";
@@ -36,13 +36,19 @@ window.addEventListener("resize", checkScreenSize);
 function MsgCreate(msgCnt, sizeVal) {
   message.style.width = `${sizeVal}`;
   message.innerHTML = `${msgCnt}`;
+  const closeBtn = document.createElement("a");
+  closeBtn.id = "closeBtn";
+  closeBtn.href = "javascript:void(0)";
+  closeBtn.innerHTML = "&times;";
+  closeBtn.title = "Esc";
+  closeBtn.onclick = function () {
+    document.getElementById("msgOverlay").style.display = "none";
+  };
+  message.appendChild(closeBtn);
   msgOverlay.appendChild(message);
   msgOverlay.style.display = "block";
 }
 
-function closeNav() {
-  document.getElementById("msgOverlay").style.display = "none";
-}
 function startGame() {
   msgOverlay.style.display = "none";
   isPlaying = true;
