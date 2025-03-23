@@ -9,27 +9,35 @@
   </head>
 
   <body>
-    <h1>💥💥 Dodge the asteroids 🚀💥💥</h1>
+    <h1>💥💥 Dodge the Asteroids 🚀💥💥</h1>
     <div id="msgOverlay">
-      <a href="javascript:void(0)" id="closebtn" onclick="closeNav()"
+      <a
+        href="javascript:void(0)"
+        id="closebtn"
+        title="Esc"
+        onclick="closeNav()"
         >&times;</a
       >
       <br />
     </div>
     <div id="menu">
-      <h2>
-        This is a simple game made entirely in JS, along with HTML for structure
-        and CSS for the style. You just controll a spaceship with your arrow
-        keys or the W, A, S, D keys. <br />
-        You gole is to collect small blue coins. I will add some more features
-        to the game later down the road. For now it is a simple game that has
-        helped me understand the strength of JS and some basic game development
-        knowledge.
+      <p>
+        Welcome to <strong>Dodge the Asteroids</strong>!
         <br />
-        This game is not optimized for all devise sizes at present so start the
-        game in full screen in full screen to play and also this game only works
-        on Pc with mobile support soon comming.
-      </h2>
+        <br />
+        This is a simple game built entirely with JavaScript, using HTML for
+        structure and CSS for styling. You control a spaceship using the arrow
+        keys or W, A, S, D keys as the norm in many games.
+        <br />
+        Your goal is to collect small blue coins while evading various herling
+        asteroids. More features will be added in future updates, but for now,
+        this game served as a learning project to explore JavaScript’s power in
+        game development.
+        <br />
+        <br />
+        ⚠ Note: This game is currently optimized for PC and works best in
+        fullscreen mode with a keyboard. Mobile support will be added in future.
+      </p>
 
       <div class="menuBtn">
         <button id="startGame" title="start the game">Let's Play</button>
@@ -54,14 +62,14 @@
       </div>
       <div id="options">
         <!-- <button id="asteroid">asteroid</button> -->
-        <button id="play" onclick="play()" title="press Enter">play</button>
-        <button id="pause" title="press Space bar">pause</button>
+        <button id="play" onclick="play()" title="press Enter">Play</button>
+        <button id="pause" title="press Space bar">Pause</button>
         <button
           id="reset"
           onclick="resetGame()"
           title="reset to begining in paused state"
         >
-          reset
+          Reset
         </button>
         <button id="exit" onclick="exit()" title="exit game">Exit</button>
       </div>

@@ -1,6 +1,6 @@
 :root {
-  --area-width: 55vw;
-  --area-height: 60vh;
+  --area-width: 50vw;
+  --area-height: 65vh;
 }
 body {
   -webkit-user-select: none; /* Safari */
@@ -15,6 +15,10 @@ body {
   background: fixed;
   color: rgb(255, 255, 255);
   background-color: rgb(79, 104, 108);
+  text-align: justify;
+}
+p {
+  font-size: 1.5em;
 }
 h1,
 h2 {
@@ -83,12 +87,15 @@ h2 {
 button {
   font-size: 25px;
   border: 2px solid rgba(255, 255, 255, 0.636);
-  background-color: rgba(38, 120, 142, 0.61);
+  background-color: rgb(38, 120, 142);
   border-radius: 10px;
   padding: 5px;
   margin: 40px;
   margin-bottom: 0px;
   color: white;
+}
+.on {
+  background-color: rgb(5, 184, 233);
 }
 
 .area {

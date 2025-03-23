@@ -1,7 +1,3 @@
-let gameInterval;
-let asteroidInterval;
-let coinInterval;
-let isPlaying = false;
 const menu = document.getElementById("menu");
 const game = document.getElementById("game");
 const score = document.getElementById("scoreVal");
@@ -13,7 +9,10 @@ const msgOverlay = document.getElementById("msgOverlay");
 const message = document.createElement("div");
 message.className = "message";
 const moveAmount = 10;
-
+let gameInterval;
+let asteroidInterval;
+let coinInterval;
+let isPlaying = false;
 // Function to check screen size and display a message
 function checkScreenSize() {
   const minWidth = 800; // Minimum width for the game to be playable
@@ -21,7 +20,7 @@ function checkScreenSize() {
 
   if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
     const msgText =
-      "😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm working on the mobile and tablet versions though,😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old schoole gaem where you can controll a spaceship to evade astroids and collect coins.";
+      "😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's. I'm working on the mobile and tablet versions though, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
     MsgCreate(msgText, "50%");
   } else {
     msgOverlay.style.display = "none";
@@ -47,6 +46,10 @@ function closeNav() {
 function startGame() {
   msgOverlay.style.display = "none";
   isPlaying = true;
+  toggleBtn(isPlaying);
+  const play = document.getElementById("play");
+  play.classList.add("on");
+  play.textContent = "Playing";
   gameLoop();
   asteroidInterval = setInterval(createAsteroid, 2000); // Generate an asteroid every 2 seconds
   coinInterval = setInterval(createCoins, 2000); // Generate a coin every 2 seconds
@@ -84,13 +87,30 @@ document.addEventListener("keydown", (event) => {
 });
 function play() {
   if (!isPlaying) {
+    toggleBtn(!isPlaying);
     startGame();
   }
 }
-//how to play button.
+function toggleBtn(isPlaying) {
+  const pause = document.getElementById("pause");
+  const play = document.getElementById("play");
+  if (isPlaying) {
+    play.classList.add("on");
+    play.textContent = "Playing";
+    pause.classList.remove("on");
+    pause.textContent = "Pause";
+  } else {
+    play.classList.remove("on");
+    play.textContent = "Play";
+    pause.classList.add("on");
+    pause.textContent = "Paused";
+  }
+}
+//pause button.
 document.getElementById("pause").addEventListener("click", () => {
   if (isPlaying) {
     isPlaying = false;
+    toggleBtn(isPlaying);
     clearInterval(asteroidInterval);
     clearInterval(coinInterval);
     document.removeEventListener("keydown", characterControl);
@@ -98,7 +118,7 @@ document.getElementById("pause").addEventListener("click", () => {
     const msgPaused = `Enjoying the Game so far? <br>Let me know! <br><br>GAME PAUSED <br> High Score:${Number(
       document.getElementById("hiScorVal").textContent
     )} <br>Current Score: ${Number(score.textContent)}.<br>
-    <button onclick="closeNav(play()) ">Unpause and exit</button>`;
+    <button onclick="closeNav(play()) ">Hide and Un Pause</button>`;
     const sizW = "25%";
     MsgCreate(msgPaused, sizW);
     document.querySelectorAll(".asteroids, .coins").forEach((element) => {
@@ -201,10 +221,15 @@ function checkCollisions(shipRect) {
       document.querySelectorAll(".asteroids, .coins").forEach((element) => {
         element.classList.add("paused");
       });
-      const msgOver = `Let me know if you are facing any problems and further features if you want one.<br><br>!!!!GAME OVER!!!! <br><br> Your score: ${Number(
-        score.textContent
-      )}.`;
+      const hi = Number(document.getElementById("hiScorVal").textContent);
+      const scored = Number(score.textContent);
+      const msgOver =
+        scored > hi
+          ? `!!!!!!!!New High Score!!!!!!!! <br><br>Let me know if you are facing any problems and suggest a features if you want one. <br><br>!!!!GAME OVER!!!! <br><br>Presvious High Score:${hi}<br>Your score: ${scored}.`
+          : `Let me know if you are facing any problems and suggest a features if you want one. <br><br>!!!!GAME OVER!!!! <br><br> High Score:${hi}<br>Your score: ${scored}.`;
+
       const sizW = "25%";
+
       MsgCreate(msgOver, sizW);
       resetGame();
     }
@@ -296,6 +321,7 @@ function characterControl(event) {
 function resetGame() {
   // msgOverlay.style.display = "none";
   isPlaying = false;
+  toggleBtn(isPlaying);
   clearInterval(asteroidInterval);
   clearInterval(coinInterval);
   document.removeEventListener("keydown", characterControl);
@@ -310,9 +336,10 @@ function resetGame() {
 }
 
 document.getElementById("instructions").addEventListener("click", () => {
-  alert(
-    "Use W, A, S, D keys or the arrow keys to move the spaceship. Avoid asteroids and collect blue coins and power-ups."
-  );
+  const instructions =
+    "Use W, A, S, D keys or the arrow keys to move the spaceship. Avoid asteroids and collect blue coins and power-ups.";
+  const sizeW = "30%";
+  MsgCreate(instructions, sizeW);
 });
 
 function exit() {
