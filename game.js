@@ -3,9 +3,9 @@ const game = document.getElementById("game");
 const score = document.getElementById("scoreVal");
 const ship = document.getElementById("ship");
 const area = document.querySelector(".area");
+const bgAudio = new Audio("./Assets/bgAudio.wav");
 const enemy = document.getElementById("enemy");
 const msgOverlay = document.getElementById("msgOverlay");
-
 const message = document.createElement("div");
 message.className = "message";
 const moveAmount = 10;
@@ -20,7 +20,7 @@ function checkScreenSize() {
 
   if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
     const msgText =
-      "If you are on mobile 😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's with keyboard. I'm working on the mobile and tablet versions though, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
+      "If you are on mobile 😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's with keyboard. I'm working on touch version for the mobile and tablet, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
     MsgCreate(msgText, "50%");
   } else {
     msgOverlay.style.display = "none";
@@ -53,6 +53,8 @@ function startGame() {
   msgOverlay.style.display = "none";
   isPlaying = true;
   toggleBtn(isPlaying);
+  //background music
+  bgAudio.loop = true;
   const play = document.getElementById("play");
   play.classList.add("on");
   play.textContent = "Playing";
@@ -88,7 +90,7 @@ document.addEventListener("keydown", (event) => {
     document.getElementById("pause").click();
   }
   if (event.key === "Escape") {
-    document.getElementById("closebtn").click();
+    document.getElementById("closeBtn").click();
   }
 });
 function play() {
@@ -105,11 +107,13 @@ function toggleBtn(isPlaying) {
     play.textContent = "Playing";
     pause.classList.remove("on");
     pause.textContent = "Pause";
+    bgAudio.play();
   } else {
     play.classList.remove("on");
     play.textContent = "Play";
     pause.classList.add("on");
     pause.textContent = "Paused";
+    bgAudio.pause();
   }
 }
 //pause button.
@@ -121,16 +125,17 @@ document.getElementById("pause").addEventListener("click", () => {
     clearInterval(coinInterval);
     document.removeEventListener("keydown", characterControl);
     document.querySelector(".area").classList.add("paused");
-    const msgPaused = `Enjoying the Game so far? <br>Let me know! <br><br>GAME PAUSED <br> High Score:${Number(
-      document.getElementById("hiScorVal").textContent
-    )} <br>Current Score: ${Number(score.textContent)}.<br>
-    <button onclick="closeNav(play()) ">Hide and Un Pause</button>`;
-    const sizW = "25%";
-    MsgCreate(msgPaused, sizW);
+
     document.querySelectorAll(".asteroids, .coins").forEach((element) => {
       element.classList.add("paused");
     });
   }
+  const msgPaused = `Enjoying the Game so far? <br>Let me know! <br><br>GAME PAUSED <br> High Score: ${Number(
+    document.getElementById("hiScorVal").textContent
+  )} <br>Current Score: ${Number(score.textContent)}.<br><br>
+    <button onclick="closeBtn(play()) ">Hide and Un Pause</button>`;
+  const sizW = "25%";
+  MsgCreate(msgPaused, sizW);
 });
 
 //spawn asteroids
@@ -146,7 +151,7 @@ function createAsteroid() {
 
   // Create an img element inside the asteroid div
   const asteroidImg = document.createElement("img");
-  asteroidImg.src = "./images/asteroid.png"; // Set the source of the image
+  asteroidImg.src = "./Assets/asteroid.png"; // Set the source of the image
   asteroidImg.width = 50; // Set the width of the image
   asteroidImg.height = 50; // Set the height of the image
 
@@ -174,7 +179,7 @@ function createCoins() {
 
   // Create an img element inside the coin div
   const coinImg = document.createElement("img");
-  coinImg.src = "./images/coin.png"; // Set the source of the image
+  coinImg.src = "./Assets/coin.png"; // Set the source of the image
   coinImg.width = 20; // Set the width of the image
   coinImg.height = 20; // Set the height of the image
 
@@ -227,12 +232,14 @@ function checkCollisions(shipRect) {
       document.querySelectorAll(".asteroids, .coins").forEach((element) => {
         element.classList.add("paused");
       });
+      const explosion = new Audio("Assets/explosion.wav");
+      explosion.play();
       const hi = Number(document.getElementById("hiScorVal").textContent);
       const scored = Number(score.textContent);
       const msgOver =
         scored > hi
-          ? `!!!!!!!!New High Score!!!!!!!! <br><br>Let me know if you are facing any problems and suggest a features if you want one. <br><br>!!!!GAME OVER!!!! <br><br>Presvious High Score:${hi}<br>Your score: ${scored}.`
-          : `Let me know if you are facing any problems and suggest a features if you want one. <br><br>!!!!GAME OVER!!!! <br><br> High Score:${hi}<br>Your score: ${scored}.`;
+          ? `!!!!!!!!New High Score!!!!!!!! <br><br>Let me know if you are facing any problems and suggest a features if you want one. <br><br>!!!!GAME OVER!!!! <br><br>Presvious High Score: ${hi}<br>Your score: ${scored}.`
+          : `Let me know if you are facing any problems and suggest a features if you want one. <br><br>!!!!GAME OVER!!!! <br><br> High Score: ${hi}<br>Your score: ${scored}.`;
 
       const sizW = "25%";
 
@@ -241,7 +248,7 @@ function checkCollisions(shipRect) {
     }
   });
 
-  // Collision checking for coins
+  // Score calculation for coins colected
   document.querySelectorAll(".coins").forEach((coin) => {
     const coinRect = coin.getBoundingClientRect();
 
@@ -252,6 +259,9 @@ function checkCollisions(shipRect) {
       shipRect.top + shipRect.height > coinRect.top
     ) {
       // Collision detected with coin
+      const coinCollected = new Audio("./Assets/coinCollected.wav");
+      coinCollected.play();
+
       coin.remove(); // Remove the coin from the game area
 
       let scoreValue = Number(score.textContent);
@@ -277,7 +287,7 @@ function hiScoreCalc(scoreVal) {
 }
 
 document.addEventListener("keyup", (event) => {
-  ship.innerHTML = "<img src='./images/spaceship.png' width='100px' />";
+  ship.innerHTML = "<img src='./Assets/spaceship.png'  />";
 });
 
 // Controlling the spaceship using the W, A, S, D keys
@@ -294,12 +304,12 @@ function characterControl(event) {
   const movementKeys = {
     w: { axis: "y", value: -speed },
     s: { axis: "y", value: speed },
-    a: { axis: "x", value: -speed, img: "./images/spaceship_rev.png" },
-    d: { axis: "x", value: speed, img: "./images/spaceship_fwd.png" },
+    a: { axis: "x", value: -speed, img: "./Assets/spaceship_rev.png" },
+    d: { axis: "x", value: speed, img: "./Assets/spaceship_fwd.png" },
     arrowup: { axis: "y", value: -speed },
     arrowdown: { axis: "y", value: speed },
-    arrowleft: { axis: "x", value: -speed, img: "./images/spaceship_rev.png" },
-    arrowright: { axis: "x", value: speed, img: "./images/spaceship_fwd.png" },
+    arrowleft: { axis: "x", value: -speed, img: "./Assets/spaceship_rev.png" },
+    arrowright: { axis: "x", value: speed, img: "./Assets/spaceship_fwd.png" },
   };
 
   let key = event.key.toLowerCase();
@@ -336,7 +346,7 @@ function resetGame() {
   });
   hiScoreCalc(Number(score.textContent));
   score.textContent = "0";
-  ship.innerHTML = "<img src='./images/spaceship.png' width='100px'/>";
+  ship.innerHTML = "<img src='./Assets/spaceship.png' />";
   ship.style.top = "50%";
   ship.style.left = "50%";
 }
@@ -352,6 +362,7 @@ function exit() {
   game.style.display = "none";
   menu.style.display = "block";
   isPlaying = false;
+  bgAudio.pause();
   clearInterval(asteroidInterval);
   clearInterval(coinInterval);
   document.removeEventListener("keydown", characterControl);
