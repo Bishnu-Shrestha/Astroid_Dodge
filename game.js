@@ -14,18 +14,18 @@ let asteroidInterval;
 let coinInterval;
 let isPlaying = false;
 // Function to check screen size and display a message
-// function checkScreenSize() {
-//   const minWidth = 800; // Minimum width for the game to be playable
-//   const minHeight = 600; // Minimum height for the game to be playable
+function checkScreenSize() {
+  const minWidth = 800; // Minimum width for the game to be playable
+  const minHeight = 600; // Minimum height for the game to be playable
 
-//   if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
-//     const msgText =
-//       "If you are on mobile 😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's with keyboard. I'm working on touch version for the mobile and tablet, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
-//     MsgCreate(msgText, "50%");
-//   } else {
-//     msgOverlay.style.display = "none";
-//   }
-// }
+  if (window.innerWidth < minWidth || window.innerHeight < minHeight) {
+    const msgText =
+      "If you are on mobile 😓😓 Sorry!! 😓😓 this game is currently only compatible with PC's with keyboard. I'm working on touch version for the mobile and tablet, 😅😅 for now if you can try and visit here through your PC.  <br /> This is just a simple old school game where you can control a spaceship to evade asteroid's and collect coins.";
+    MsgCreate(msgText, "50%");
+  } else {
+    msgOverlay.style.display = "none";
+  }
+}
 
 // Call the function to check screen size on page load
 document.addEventListener("DOMContentLoaded", checkScreenSize);
