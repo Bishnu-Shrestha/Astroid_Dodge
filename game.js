@@ -290,6 +290,19 @@ document.addEventListener("keyup", (event) => {
   ship.innerHTML = "<img src='./Assets/spaceship.png'  />";
 });
 
+document
+  .getElementById("up")
+  .addEventListener("click", () => characterControl("ArrowUp"));
+document
+  .getElementById("down")
+  .addEventListener("click", () => characterControl("ArrowDown"));
+document
+  .getElementById("left")
+  .addEventListener("click", () => characterControl("ArrowLeft"));
+document
+  .getElementById("right")
+  .addEventListener("click", () => characterControl("ArrowRight"));
+
 // Controlling the spaceship using the W, A, S, D keys
 function characterControl(event) {
   const areaRect = area.getBoundingClientRect();
@@ -312,7 +325,15 @@ function characterControl(event) {
     arrowright: { axis: "x", value: speed, img: "./Assets/spaceship_fwd.png" },
   };
 
-  let key = event.key.toLowerCase();
+  // Optional: Also allow desktop mouse clicks for testing
+
+  let key;
+
+  if (typeof event === "string") {
+    key = event.toLowerCase();
+  } else {
+    key = event.key.toLowerCase();
+  }
   if (movementKeys[key]) {
     let move = movementKeys[key];
 

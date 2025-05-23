@@ -121,6 +121,9 @@ button {
   background-size: auto 100%;
   animation: slideBackground 20s linear infinite;
 }
+#navBtn {
+  display: none;
+}
 #game {
   display: none;
 }
@@ -137,12 +140,14 @@ button {
   text-align: center;
 }
 .score {
-  float: left;
-  margin-left: 30px;
+  position: fixed;
+  left: 5vw;
+  top: 10vh;
 }
 .highScore {
-  float: right;
-  margin-right: 30px;
+  position: fixed;
+  right: 5vw;
+  top: 10vh;
 }
 @keyframes slideBackground {
   0% {
@@ -186,6 +191,7 @@ button {
   height: 20px;
   animation: slider 5s linear 1;
 }
+
 footer {
   position: fixed;
   bottom: 0px;
@@ -227,9 +233,9 @@ a {
   .area {
     position: fixed;
     top: 20vh;
-    margin: auto;
-    height: 55vh;
-    width: 100vw;
+    margin-left: 10vw;
+    height: 50vh;
+    width: 80vw;
     animation: slideBackground 20s linear infinite;
   }
   #options {
@@ -238,6 +244,43 @@ a {
     bottom: 0px;
     gap: 60px;
     width: 80%;
+  }
+  #navBtn {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    height: 10px;
+    margin-top: 70vh;
+  }
+  #navVert #navHorz {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #navVert {
+    position: fixed;
+    gap: 10px;
+    width: 30px;
+    left: 4vw;
+  }
+  #navHorz {
+    position: fixed;
+    gap: 10px;
+    right: 4vw;
+  }
+  #down {
+    transform: rotate(180deg);
+  }
+  #left {
+    transform: rotate(-90deg);
+  }
+  #right {
+    transform: rotate(90deg);
+  }
+  #navBtn img {
+    height: 70px;
   }
   #ship img {
     width: 75px;
@@ -248,8 +291,9 @@ a {
   }
   .score,
   .highScore {
-    margin-top: 15px;
-    font-size: 1.2em;
+    z-index: 1;
+    margin-top: 10px;
+    font-size: 1.1em;
   }
   @keyframes slider {
     0% {
