@@ -62,6 +62,19 @@ function startGame() {
   asteroidInterval = setInterval(createAsteroid, 2000); // Generate an asteroid every 2 seconds
   coinInterval = setInterval(createCoins, 2000); // Generate a coin every 2 seconds
   document.addEventListener("keydown", characterControl);
+  document
+    .getElementById("up")
+    .addEventListener("touchstart", () => characterControl("ArrowUp"));
+  document
+    .getElementById("down")
+    .addEventListener("touchstart", () => characterControl("ArrowDown"));
+  document
+    .getElementById("left")
+    .addEventListener("touchstart", () => characterControl("ArrowLeft"));
+  document
+    .getElementById("right")
+    .addEventListener("touchstart", () => characterControl("ArrowRight"));
+
   document.querySelector(".area").classList.remove("paused");
   document.querySelectorAll(".asteroids, .coins").forEach((element) => {
     element.classList.remove("paused");
@@ -289,19 +302,6 @@ function hiScoreCalc(scoreVal) {
 document.addEventListener("keyup", (event) => {
   ship.innerHTML = "<img src='./Assets/spaceship.png'  />";
 });
-
-document
-  .getElementById("up")
-  .addEventListener("touchstart", () => characterControl("ArrowUp"));
-document
-  .getElementById("down")
-  .addEventListener("touchstart", () => characterControl("ArrowDown"));
-document
-  .getElementById("left")
-  .addEventListener("touchstart", () => characterControl("ArrowLeft"));
-document
-  .getElementById("right")
-  .addEventListener("touchstart", () => characterControl("ArrowRight"));
 
 // Controlling the spaceship using the W, A, S, D keys
 function characterControl(event) {
