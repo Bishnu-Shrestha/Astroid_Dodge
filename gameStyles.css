@@ -1,7 +1,8 @@
 :root {
-  --area-width: 50vw;
-  --area-height: 65vh;
-  --footer-height: 4vh;
+  --area-width: 80vw;
+  --area-height: 70vh;
+  --footer-height: 3vh;
+  --text-size: 1.4em;
 }
 * {
   margin: 0;
@@ -20,7 +21,7 @@ body {
   text-align: justify;
 }
 p {
-  font-size: 1.5em;
+  font-size: var(--text-size);
 }
 h1,
 h2 {
@@ -53,12 +54,12 @@ h2 {
   top: -50px;
   right: -25px;
   color: rgb(255, 255, 255);
-  font-size: 100px;
+  font-size: calc(var(--text-size) + 2em);
 }
 
 .message {
   position: relative;
-  font-size: 1.6em;
+  font-size: var(--text-size);
   height: fit-content;
   text-align: center;
   z-index: 1;
@@ -96,7 +97,7 @@ h2 {
   bottom: 5vh;
 }
 button {
-  font-size: 1.3em;
+  font-size: calc(var(--text-size) - 0.4em);
   border: 2px solid rgba(255, 255, 255, 0.636);
   background-color: rgb(38, 120, 142);
   border-radius: 10px;
@@ -115,6 +116,7 @@ button {
   width: var(--area-width);
   background-color: black;
   margin: auto;
+  z-index: -1;
   top: 10vh;
   background-image: url(./Assets/space.jpg);
   background-repeat: repeat-x;
@@ -123,6 +125,44 @@ button {
 }
 #navBtn {
   display: none;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  height: 6px;
+  width: 100%;
+  bottom: 15vh;
+}
+#navVert {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  left: 4vw;
+}
+#navHorz {
+  display: flex;
+  gap: 10px;
+  position: fixed;
+  right: 4vw;
+}
+.virtualController {
+  background-image: url(./Assets/arrow.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  height: 60px;
+  width: 40px;
+}
+
+#down {
+  transform: rotate(180deg);
+}
+#left {
+  transform: rotate(-90deg);
+}
+#right {
+  transform: rotate(90deg);
 }
 #game {
   display: none;
@@ -130,7 +170,7 @@ button {
 .score,
 .highScore {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  font-size: 1.5em;
+  font-size: var(--text-size);
   padding: 20px;
   border: 3px solid white;
   border-radius: 20px;
@@ -201,7 +241,7 @@ footer {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 1.3em;
+  font-size: calc(var(--text-size) - 0.6em);
   background-color: rgb(66, 113, 150);
   width: 100%;
   height: var(--footer-height);
@@ -231,13 +271,12 @@ a {
     opacity: 0%;
   }
 }
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 800px) {
   .area {
     position: fixed;
     top: 20vh;
     margin-left: 10vw;
-    height: 50vh;
-    width: 80vw;
+    height: 60vh;
     animation: slideBackground 20s linear infinite;
   }
   #options {
@@ -246,48 +285,10 @@ a {
     /* gap: 40px; */
     width: 100%;
   }
-  #navBtn {
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: red;
-    height: 6px;
-    width: 100%;
-    bottom: 20vh;
-  }
-  .virtualController {
-    background-image: url(./Assets/arrow.png);
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center;
-    height: 60px;
-    width: 40px;
-  }
-  #navVert {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    height: 100px;
-    left: 4vw;
-  }
-  #navHorz {
-    display: flex;
-    gap: 10px;
-    position: fixed;
-    right: 4vw;
-  }
-  #down {
-    transform: rotate(180deg);
-  }
-  #left {
-    transform: rotate(-90deg);
-  }
-  #right {
-    transform: rotate(90deg);
-  }
-  #ship img {
+
+  #ship {
     width: 75px;
+    height: 105px;
   }
   .asteroids img {
     width: 25px;
@@ -295,8 +296,8 @@ a {
   }
   .score,
   .highScore {
-    margin-top: 10px;
-    font-size: 1.4em;
+    margin-top: 5vh;
+    font-size: 1.2em;
   }
   @keyframes slider {
     0% {

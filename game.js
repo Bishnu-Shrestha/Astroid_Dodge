@@ -372,6 +372,30 @@ function characterControl(event) {
     ship.style.left = `${x}px`;
   }
 }
+
+//touch and keyboard detection
+let isTouchInput = false;
+let isKeyboardInput = false;
+
+function handleTouch() {
+  isTouchInput = true;
+  // Optionally: remove listeners after detection
+  window.removeEventListener("touchstart", handleTouch);
+  document.getElementById("navBtn").style.display = "flex";
+  window.removeEventListener("keydown", handleKey);
+  console.log("Touch input detected!");
+}
+
+function handleKey() {
+  isKeyboardInput = true;
+  window.removeEventListener("touchstart", handleTouch);
+  window.removeEventListener("keydown", handleKey);
+  console.log("Keyboard input detected!");
+}
+
+window.addEventListener("touchstart", handleTouch, { once: true });
+window.addEventListener("keydown", handleKey, { once: true });
+
 // Add reset functionality
 function resetGame() {
   // msgOverlay.style.display = "none";
@@ -386,6 +410,7 @@ function resetGame() {
   hiScoreCalc(Number(score.textContent));
   score.textContent = "0";
   ship.style.backgroundImage = "url(./Assets/spaceship.png)";
+  disableOnScrCtrl();
   ship.style.top = "50%";
   ship.style.left = "50%";
 }
