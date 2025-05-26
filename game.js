@@ -87,16 +87,18 @@ document
     event.preventDefault();
   });
 function enblOnScrCtrl() {
-  document.getElementById("up").addEventListener("click", handleUp);
-  document.getElementById("down").addEventListener("click", handleDown);
-  document.getElementById("left").addEventListener("click", handleLeft);
-  document.getElementById("right").addEventListener("click", handleRight);
+  document.getElementById("up").addEventListener("touchstart", handleUp);
+  document.getElementById("down").addEventListener("touchstart", handleDown);
+  document.getElementById("left").addEventListener("touchstart", handleLeft);
+  document.getElementById("right").addEventListener("touchstart", handleRight);
 }
 function disableOnScrCtrl() {
-  document.getElementById("up").removeEventListener("click", handleUp);
-  document.getElementById("down").removeEventListener("click", handleDown);
-  document.getElementById("left").removeEventListener("click", handleLeft);
-  document.getElementById("right").removeEventListener("click", handleRight);
+  document.getElementById("up").removeEventListener("touchstart", handleUp);
+  document.getElementById("down").removeEventListener("touchstart", handleDown);
+  document.getElementById("left").removeEventListener("touchstart", handleLeft);
+  document
+    .getElementById("right")
+    .removeEventListener("touchstart", handleRight);
 }
 function gameLoop() {
   if (!isPlaying) return;

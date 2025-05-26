@@ -131,13 +131,13 @@ button {
   background-color: red;
   height: 6px;
   width: 100%;
-  bottom: 15vh;
+  bottom: 14vh;
 }
 #navVert {
   position: fixed;
   display: flex;
   flex-direction: column;
-  height: 100px;
+  gap: 10px;
   left: 4vw;
 }
 #navHorz {
@@ -147,12 +147,12 @@ button {
   right: 4vw;
 }
 .virtualController {
-  background-image: url(./Assets/arrow.png);
+  background-image: url(./Assets/arrowW.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  height: 60px;
-  width: 40px;
+  height: 55px;
+  width: 55px;
 }
 
 #down {
@@ -281,9 +281,10 @@ a {
   }
   #options {
     position: fixed;
-    bottom: 5vh;
-    /* gap: 40px; */
-    width: 100%;
+    top: 16vh;
+    right: 1vw;
+    transform: rotate(90deg);
+    width: 32px;
   }
 
   #ship {
@@ -299,6 +300,7 @@ a {
     margin-top: 5vh;
     font-size: 1.2em;
   }
+
   @keyframes slider {
     0% {
       transform: translateX(-2);
